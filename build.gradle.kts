@@ -18,6 +18,10 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
     paperLibrary("net.kyori", "adventure-platform-bukkit", "4.2.0")
     paperLibrary("de.eldoria.util", "jackson-configuration", "2.0.0-SNAPSHOT")
+
+    testImplementation("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 tasks {
@@ -30,12 +34,23 @@ tasks {
         from(jar)
         destinationDir = File(path.toString())
     }
+            test {
+            useJUnitPlatform()
+            testLogging {
+                events("passed", "skipped", "failed")
+            }
+        }
+
 }
 
 paper {
     main = "de.chojo.Main"
     bootstrapper = "de.chojo.Bootstrapper"
     loader = "de.chojo.Loader"
+
+    generatePluginLibraries = true
+
+    foliaSupported = true
 
     apiVersion = "1.19"
 
